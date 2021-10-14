@@ -121,6 +121,42 @@ func UpdateTodo(env *Env) http.HandlerFunc {
 	}
 }
 
+func DeleteTodo(env *Env) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		env.Log.Info(parseHeaders(r))
+		var_id := env.Mvars(r)["id"]
+		// parse id to string
+		id, err := strconv.ParseInt(var_id, 10, 64)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Header().Set("Content-Type", "application/json")
+			io.WriteString(w, `"{"error": "Invalid id format"}"`)
+			return
+		}
+
+		// search in db
+		rows, err := env.DB.Query(`select name, done from todo.todo where id = $1`, id)
+		//err = row.Scan(&todo.Name, &todo.Done)
+
+		if err != nil {
+			env.Log.Error(err)
+			sendErrorMessage(w, "Item not found")
+			return
+		}
+
+		if rows.Next() {
+			// exists
+			env.DB.Exec(`delete from todo.todo where id = $1`, id)
+
+		} else {
+			env.Log.Error("Not found")
+			sendErrorMessage(w, "Item not found")
+			return
+		}
+
+	}
+}
+
 func parseHeaders(r *http.Request) string {
 	return fmt.Sprintf("From: %s, Method: %s, Requested: %v", r.RemoteAddr, r.Method, r.RequestURI)
 }

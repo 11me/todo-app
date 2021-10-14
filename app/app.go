@@ -48,6 +48,7 @@ func main() {
 	r.HandleFunc("/api/create", models.CreateTodo(env)).Methods("POST")
 	r.HandleFunc("/api/todos", models.GetTodos(env)).Methods("GET")
 	r.HandleFunc("/api/update/{id}", models.UpdateTodo(env)).Methods("UPDATE")
+	r.HandleFunc("/api/delete/{id}", models.DeleteTodo(env)).Methods("DELETE")
 
 	log.Infof("Listening on %s", addr)
 	log.Error(http.ListenAndServe(addr, r))
