@@ -35,11 +35,17 @@ func CreateTodo(env *Env) http.HandlerFunc {
 		body, _ := io.ReadAll(r.Body)
 
 		err := json.Unmarshal(body, &todo)
-		asserError(env, w, err)
+		if err != nil {
+			sendErrorMessage(w, "Invalid json")
+			return
+		}
 
 		_, err = env.DB.Exec(`INSERT INTO todo.todo (name, done) values ($1, $2)`, todo.Name, todo.Done)
-		asserError(env, w, err)
-
+		if err != nil {
+			sendErrorMessage(w, "Item not found")
+			return
+		}
+		w.WriteHeader(http.StatusCreated)
 	}
 }
 
@@ -71,13 +77,47 @@ func GetTodos(env *Env) http.HandlerFunc {
 
 func UpdateTodo(env *Env) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 		env.Log.Info(parseHeaders(r))
 		var_id := env.Mvars(r)["id"]
 		// parse id to string
 		id, err := strconv.ParseInt(var_id, 10, 64)
-		asserError(env, w, err)
-		env.Log.Info(id)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Header().Set("Content-Type", "application/json")
+			io.WriteString(w, `"{"error": "Invalid id format"}"`)
+			return
+		}
+
+		// search in db
+		rows, err := env.DB.Query(`select name, done from todo.todo where id = $1`, id)
+		//err = row.Scan(&todo.Name, &todo.Done)
+
+		if err != nil {
+			env.Log.Error(err)
+			sendErrorMessage(w, "Item not found")
+			return
+		}
+
+		if rows.Next() {
+			// exists
+			var todo Todo
+			var body []byte
+			body, _ = io.ReadAll(r.Body)
+
+			err := json.Unmarshal(body, &todo)
+
+			if err != nil {
+				sendErrorMessage(w, "Invalid json")
+				return
+			}
+
+			env.DB.Exec(`update todo.todo set name = $1, done = $2 where id = $3`, todo.Name, todo.Done, id)
+		} else {
+			env.Log.Error("Not found")
+			sendErrorMessage(w, "Item not found")
+			return
+		}
+
 	}
 }
 
@@ -92,4 +132,11 @@ func asserError(env *Env, w http.ResponseWriter, err error) {
 		io.WriteString(w, "Invalid request")
 		return
 	}
+}
+
+func sendErrorMessage(w http.ResponseWriter, errMsg string) {
+	msg := fmt.Sprintf(`"{"error": %s}"`, errMsg)
+	w.WriteHeader(http.StatusBadRequest)
+	w.Header().Set("Content-Type", "application/json")
+	io.WriteString(w, msg)
 }
