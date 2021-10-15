@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
@@ -13,7 +14,7 @@ import (
 
 const (
 	HOST = "0.0.0.0"
-	PORT = 8080
+	PORT = 3001
 
 	DBHOST = "0.0.0.0"
 	DBPORT = 5432
@@ -51,6 +52,5 @@ func main() {
 	r.HandleFunc("/api/delete/{id}", models.DeleteTodo(env)).Methods("DELETE")
 
 	log.Infof("Listening on %s", addr)
-	log.Error(http.ListenAndServe(addr, r))
-
+	log.Error(http.ListenAndServe(addr, handlers.CORS()(r)))
 }
