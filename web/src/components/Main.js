@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 import Input from './Input';
 import TodoItem from './Todo'
 
@@ -26,8 +25,8 @@ const Main = () => {
   }
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/todos").
-      then(res => {
+    axios.get("http://localhost:3001/api/todos")
+      .then(res => {
         setTodos(prevTodos => [...res.data])
       })
   }, []);

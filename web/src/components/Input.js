@@ -1,15 +1,11 @@
 import { useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 
 const Input = (props) => {
   const [inputText, setInputText] = useState("")
-  const updateText = text => setInputText(text)
   return (
     <Paper
       component="form"
