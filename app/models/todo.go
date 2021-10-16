@@ -40,12 +40,13 @@ func CreateTodo(env *Env) http.HandlerFunc {
 			return
 		}
 
-		_, err = env.DB.Exec(`INSERT INTO todo.todo (name, done) values ($1, $2)`, todo.Name, todo.Done)
+		err = env.DB.QueryRow(`INSERT INTO todo.todo (name, done) values ($1, $2) returning id`, todo.Name, todo.Done).Scan(&todo.ID)
 		if err != nil {
 			sendErrorMessage(w, "Item not found")
 			return
 		}
 		w.WriteHeader(http.StatusCreated)
+		io.WriteString(w, strconv.FormatInt(int64(todo.ID), 10))
 	}
 }
 

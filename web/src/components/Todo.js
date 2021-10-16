@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -8,15 +7,8 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import axios from 'axios'
 
-const TodoItem = () => {
-  const [todos, setTodos] = useState([])
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/api/todos").
-      then(res => {
-        setTodos(prevTodos => [...res.data])
-      })
-  }, []);
+const TodoItem = (props) => {
+  const todos = [...props.todos]
 
   const toggleTodo = e => {
     const updatedTodods = [...todos].map(todo => {
@@ -25,7 +17,7 @@ const TodoItem = () => {
       }
       return todo
     })
-    setTodos(updatedTodods)
+    props.setTodos(updatedTodods)
     axios({
       method: 'patch',
       url: `http://localhost:3001/api/update/${e.target.id}`,
@@ -35,6 +27,19 @@ const TodoItem = () => {
       },
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
+      }
+    })
+  }
+
+  const deleteTodo = id => {
+    const updatedTodods = [...todos].filter(todo => todo.id !== id)
+    props.setTodos(updatedTodods)
+
+    axios({
+      method: 'delete',
+      url: `http://localhost:3001/api/delete/${id}`,
+      headers: {
+        'content-type': 'x-www-form-urlencoded'
       }
     })
   }
@@ -49,7 +54,7 @@ const TodoItem = () => {
             secondaryAction={
                 <ButtonGroup variant="contained">
                   <Button size="small" variant="outlined" color="success">Edit</Button>
-                  <Button size="small" variant="outlined" color="error">Delete</Button>
+                  <Button size="small" variant="outlined" color="error" onClick={e => deleteTodo(todo.id)}>Delete</Button>
                 </ButtonGroup>
             }
           >
