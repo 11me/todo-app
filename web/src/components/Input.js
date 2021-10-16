@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 
 const Input = (props) => {
-  const [inputText, setInputText] = useState("Add a new todo...")
+  const [inputText, setInputText] = useState("")
   const updateText = text => setInputText(text)
   return (
     <Paper
@@ -17,7 +17,8 @@ const Input = (props) => {
       >
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder={inputText}
+          placeholder="Add a new todo..."
+          value={inputText}
           onChange={e => setInputText(e.target.value)}
         />
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -27,6 +28,7 @@ const Input = (props) => {
         color="success"
         onClick={e => {
           props.addTodo(inputText)
+          setInputText("")
         }}>
           Save
         </Button>

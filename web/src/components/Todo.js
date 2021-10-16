@@ -52,10 +52,7 @@ const TodoItem = (props) => {
           <ListItem
             key={todo.id}
             secondaryAction={
-                <ButtonGroup variant="contained">
-                  <Button size="small" variant="outlined" color="success">Edit</Button>
                   <Button size="small" variant="outlined" color="error" onClick={e => deleteTodo(todo.id)}>Delete</Button>
-                </ButtonGroup>
             }
           >
             <Checkbox
