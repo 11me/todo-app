@@ -51,6 +51,8 @@ func main() {
 	r.HandleFunc("/api/update/{id}", models.UpdateTodo(env)).Methods("PATCH")
 	r.HandleFunc("/api/delete/{id}", models.DeleteTodo(env)).Methods("DELETE")
 
+	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../web/build"))))
+
 	methods := handlers.AllowedMethods([]string{"GET", "POST", "PATCH", "DELETE"})
 	origins := handlers.AllowedOrigins([]string{"*"})
 
