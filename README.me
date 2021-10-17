@@ -1,0 +1,20 @@
+# Simple Fullstack Web Application
+
+It is a simple web application written using React and Gorilla/mux.
+It could be run locally, but one should install following requirements
+on the system;
+
+## Requirements:
+1. PostgreSQL
+2. Golang
+3. NodeJS
+
+## How to start the application:
+1. Install PostgreSQL, is is recommened to install it from dockerHub
+`$ docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres`
+2. Install node packages:
+`$ cd web/ && yarn install`
+3. Start the frontend
+`$ yarn start`
+4. Start Go server
+`$ cd app/ && go run app.go`
