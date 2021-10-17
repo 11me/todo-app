@@ -3,7 +3,7 @@ services:
   server:
     container_name: todo-app
     image: 11me/todo-app:v2
-    restart: always
+    restart: unless-stopped
     environment:
       PG_HOST: postgres
     ports:
@@ -14,7 +14,7 @@ services:
   db:
     container_name: postgres
     image: postgres:12
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_USER: postgres
