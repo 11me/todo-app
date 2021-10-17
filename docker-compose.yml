@@ -1,0 +1,29 @@
+version: '2'
+services:
+  server:
+    container_name: todo-app
+    build: .
+    restart: always
+    environment:
+      PG_HOST: postgres
+    ports:
+      - 3001:3001
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    container_name: postgres
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./initdb.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

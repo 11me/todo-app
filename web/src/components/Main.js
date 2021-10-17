@@ -27,7 +27,11 @@ const Main = () => {
   useEffect(() => {
     axios.get("http://localhost:3001/api/todos")
       .then(res => {
-        setTodos(prevTodos => [...res.data])
+        if (res.data) {
+          setTodos(prevTodos => [...res.data])
+        }else {
+          setTodos([])
+        }
       })
   }, []);
 
