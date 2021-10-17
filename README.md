@@ -36,3 +36,8 @@ $ yarn start
 ```
 $ cd app/ && go run app.go
 ```
+## API endpoints
+- **GET** /api/todos
+- **POST** /api/create
+- **PATCH** /api/update/{id}
+- DELETE /api/delete/{id}
