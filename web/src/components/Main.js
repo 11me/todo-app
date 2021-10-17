@@ -19,7 +19,7 @@ const Main = () => {
         'content-type': 'application/x-www-form-urlencoded'
       }
     }).then(res => {
-      setTodos((prevTodos) => [...prevTodos, {id: res.data, name: text, done: false}])
+      setTodos((prevTodos) => [{id: res.data, name: text, done: false}, ...prevTodos])
     })
 
   }
