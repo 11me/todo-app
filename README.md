@@ -9,6 +9,12 @@ on the system;
 2. Golang
 3. NodeJS
 
+## Quick start
+1. If you have docker-compose on the system
+```
+$ docker-compose up
+```
+
 ## How to start the application:
 1. Install PostgreSQL, is is recommened to install it from dockerHub
 ```
