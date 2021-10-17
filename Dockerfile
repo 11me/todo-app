@@ -18,4 +18,5 @@ WORKDIR /todo-app
 COPY --from=builder /web/build ./web/build
 COPY --from=go-builder /todo-app/app/app ./app/app
 EXPOSE 3001
-CMD ["./app/app"]
+WORKDIR /todo-app/app
+CMD ["./app"]

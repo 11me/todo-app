@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -12,11 +13,11 @@ import (
 	"github.com/todo-app/app/models"
 )
 
-const (
+var (
 	HOST = "0.0.0.0"
 	PORT = 3001
 
-	DBHOST = "0.0.0.0"
+	DBHOST = os.Getenv("PG_HOST")
 	DBPORT = 5432
 	DBUSER = "postgres"
 	DBNAME = "postgres"
@@ -33,7 +34,7 @@ var (
 
 func main() {
 
-	connStr := fmt.Sprintf("user=%s dbname=%s password=%s sslmode=%s", DBUSER, DBNAME, DBPASS, SSL)
+	connStr := fmt.Sprintf("user=%s dbname=%s password=%s host=%s sslmode=%s", DBUSER, DBNAME, DBPASS, DBHOST, SSL)
 	db, err := sql.Open("postgres", connStr)
 
 	if err != nil {
