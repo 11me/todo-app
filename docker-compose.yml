@@ -2,7 +2,7 @@ version: '2'
 services:
   server:
     container_name: todo-app
-    image: 11me/todo-app:v1
+    image: 11me/todo-app:v2
     restart: always
     environment:
       PG_HOST: postgres
