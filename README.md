@@ -2,9 +2,9 @@
 
 It is a simple web application written using React and Gorilla/mux.
 It could be run locally, but one should install following requirements
-on the system;
+on the system.
 
-## Requirements:
+## Requirements
 1. PostgreSQL
 2. Golang
 3. NodeJS
@@ -16,13 +16,13 @@ $ docker-compose up
 ```
 
 ## How to start the application:
-1. Install PostgreSQL, is is recommened to install it from dockerHub
+1. Install PostgreSQL, it is recommened to install it from dockerHub
 ```
 $ docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres
 ```
-2. You have to have a postresq client on your system to create a schema
+2. You have to have a postresql client on your system to create a schema
 ```
-$ psql -h localhost -U postgres -f schema.sql
+$ psql -h localhost -U postgres -f initdb.sql
 ```
 3. Install node packages:
 ```
