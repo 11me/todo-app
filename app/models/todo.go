@@ -56,7 +56,7 @@ func GetTodos(env *Env) http.HandlerFunc {
 		env.Log.Info(parseHeaders(r))
 
 		// get todos from db
-		rows, err := env.DB.Query(`select * from todo.todo`)
+		rows, err := env.DB.Query(`select * from todo.todo order by done asc`)
 
 		for {
 			var todo Todo
