@@ -11,12 +11,22 @@ on the system;
 
 ## How to start the application:
 1. Install PostgreSQL, is is recommened to install it from dockerHub
-`$ docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres`
+```
+$ docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres
+```
 2. You have to have a postresq client on your system to create a schema
-`$ psql -h localhost -U postgres -f schema.sql`
+```
+$ psql -h localhost -U postgres -f schema.sql
+```
 3. Install node packages:
-`$ cd web/ && yarn install`
+```
+$ cd web/ && yarn install
+```
 4. Start the frontend
-`$ yarn start`
+```
+$ yarn start
+```
 5. Start Go server
-`$ cd app/ && go run app.go`
+```
+$ cd app/ && go run app.go
+```
