@@ -5,6 +5,7 @@ services:
     image: 11me/todo-app:v2
     restart: unless-stopped
     environment:
+      SERVICE_PORT: 8080
       PG_HOST: postgres
       PG_PASSWORD: mysecretpassword
     ports:

@@ -15,7 +15,7 @@ import (
 
 var (
 	HOST = "0.0.0.0"
-	PORT = 3001
+	PORT = os.Getenv("SERVICE_PORT")
 
 	DBHOST = os.Getenv("PG_HOST")
 	DBPORT = 5432
@@ -29,7 +29,7 @@ var (
 	log  = logrus.New()
 	r    = mux.NewRouter()
 	db   *sql.DB
-	addr = fmt.Sprintf("%s:%d", HOST, PORT)
+	addr = fmt.Sprintf("%s:%s", HOST, PORT)
 )
 
 func main() {

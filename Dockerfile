@@ -17,6 +17,6 @@ FROM alpine:3.13.6
 WORKDIR /todo-app
 COPY --from=builder /web/build ./web/build
 COPY --from=go-builder /todo-app/app/app ./app/app
-EXPOSE 3001
+EXPOSE 8080
 WORKDIR /todo-app/app
 CMD ["./app"]
