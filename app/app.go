@@ -21,7 +21,7 @@ var (
 	DBPORT = 5432
 	DBUSER = "postgres"
 	DBNAME = "postgres"
-	DBPASS = "mysecretpassword"
+	DBPASS = os.Getenv("PG_PASSWORD")
 	SSL    = "disable"
 )
 
