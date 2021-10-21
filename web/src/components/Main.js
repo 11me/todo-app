@@ -3,14 +3,15 @@ import axios from 'axios';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Input from './Input';
-import TodoItem from './Todo'
+import TodoItem from './Todo';
+import HOST from '../config';
 
 const Main = () => {
   const [todos, setTodos] = useState([])
   const addTodo = (text) => {
     axios({
       method: 'post',
-      url: 'http://localhost:3001/api/create',
+      url: `${HOST}/api/create`,
       data: {
         name: text,
         done: false
@@ -25,7 +26,7 @@ const Main = () => {
   }
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/todos")
+    axios.get(`${HOST}/api/todos`)
       .then(res => {
         if (res.data) {
           setTodos(prevTodos => [...res.data])

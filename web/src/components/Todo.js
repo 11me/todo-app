@@ -4,7 +4,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import axios from 'axios'
+import axios from 'axios';
+import HOST from '../config';
 
 const TodoItem = (props) => {
   const todos = [...props.todos]
@@ -19,7 +20,7 @@ const TodoItem = (props) => {
     props.setTodos(updatedTodods)
     axios({
       method: 'patch',
-      url: `http://localhost:3001/api/update/${e.target.id}`,
+      url: `${HOST}/api/update/${e.target.id}`,
       data: {
         name: e.target.value,
         done: e.target.checked
@@ -36,7 +37,7 @@ const TodoItem = (props) => {
 
     axios({
       method: 'delete',
-      url: `http://localhost:3001/api/delete/${id}`,
+      url: `${HOST}/api/delete/${id}`,
       headers: {
         'content-type': 'x-www-form-urlencoded'
       }
